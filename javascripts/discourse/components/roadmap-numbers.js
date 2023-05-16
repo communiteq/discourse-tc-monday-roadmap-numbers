@@ -16,7 +16,8 @@ export default class RoadmapNumbers extends Component {
             this.router = api.container.lookup('service:router');
             api.onPageChange((url, title) => {
                 var routeInfo = this.router.recognize(url);
-                if ((routeInfo.name == 'tags.showCategory') || (routeInfo.name == 'tags.showCategoryNone') || (routeInfo.name == 'discovery.category')) {
+                if ((routeInfo.name == 'tags.showCategory') || (routeInfo.name == 'tags.showCategoryNone')
+                    || (routeInfo.name == 'discovery.category') || (routeInfo.name == 'discovery.categoryNone')) {
                     var param = routeInfo.params.category_slug_path_with_id || '';
                     if (param.startsWith(settings.category_slug)) {
                         this.mustShow = true;

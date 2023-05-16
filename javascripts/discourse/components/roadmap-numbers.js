@@ -18,7 +18,7 @@ export default class RoadmapNumbers extends Component {
                 var routeInfo = this.router.recognize(url);
                 if ((routeInfo.name == 'tags.showCategory') || (routeInfo.name == 'tags.showCategoryNone') || (routeInfo.name == 'discovery.category')) {
                     var param = routeInfo.params.category_slug_path_with_id || '';
-                    if (param.startsWith('submit-an-idea')) {
+                    if (param.startsWith(settings.category_slug)) {
                         this.mustShow = true;
                     } else {
                         this.mustShow = false;
@@ -29,11 +29,15 @@ export default class RoadmapNumbers extends Component {
                 }
                 if (this.mustShow) {
                     ajax(`/tags.json`).then((tags) => {
-                        const roadmapTag = tags.tags.find(obj => obj.name === 'on-roadmap');
+                        const rootTags = tags.tags;
+                        const tagGroupsTags = tags.extras.tag_groups.flatMap(group => group.tags);
+                        const allTags = [...rootTags, ...tagGroupsTags];
+
+                        const roadmapTag = allTags.find(obj => obj.name === 'on-roadmap');
                         this.roadmapCount = roadmapTag.count || 0;
-                        const releasedTag = tags.tags.find(obj => obj.name === 'released');
+                        const releasedTag = allTags.find(obj => obj.name === 'released');
                         this.releasedCount = releasedTag.count || 0;
-                        const considerTag = tags.tags.find(obj => obj.name === 'under-consideration');
+                        const considerTag = allTags.find(obj => obj.name === 'under-consideration');
                         this.considerCount = considerTag.count || 0;
                     });
                 }

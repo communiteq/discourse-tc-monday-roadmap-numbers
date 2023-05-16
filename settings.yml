@@ -1,0 +1,5 @@
+category_slug:
+  type: string
+  default: "feature-requests"
+  description: 
+    en: 'Trigger on this category slug.'

@@ -35,9 +35,12 @@ export default class RoadmapNumbers extends Component {
                         const allTags = [...rootTags, ...tagGroupsTags];
 
                         const roadmapTag = allTags.find(obj => obj.name === 'on-roadmap');
-                        this.roadmapCount = roadmapTag.count || 0;
+                        const ltRoadmapTag = allTags.find(obj => obj.name === 'long-term-roadmap');
+                        this.roadmapCount = (roadmapTag.count || 0) + (ltRoadmapTag.count || 0);
+
                         const releasedTag = allTags.find(obj => obj.name === 'released');
                         this.releasedCount = releasedTag.count || 0;
+
                         const considerTag = allTags.find(obj => obj.name === 'under-consideration');
                         this.considerCount = considerTag.count || 0;
                     });
